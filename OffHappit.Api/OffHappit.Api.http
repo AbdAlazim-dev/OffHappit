@@ -1,0 +1,6 @@
+@OffHappit.Api_HostAddress = http://localhost:5250
+
+GET {{OffHappit.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
