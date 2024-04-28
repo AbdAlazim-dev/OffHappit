@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OffHappit.Application\OffHappit.Application.csproj" />
+    <ProjectReference Include="..\OffHappit.Domain\OffHappit.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

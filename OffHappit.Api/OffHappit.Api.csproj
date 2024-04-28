@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OffHappit.Application\OffHappit.Application.csproj" />
+    <ProjectReference Include="..\OffHappit.Infrastruture\OffHappit.Infrastruture.csproj" />
+    <ProjectReference Include="..\OffHappit.Persistence\OffHappit.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
