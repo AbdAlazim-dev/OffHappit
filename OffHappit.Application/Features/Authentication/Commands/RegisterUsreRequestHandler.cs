@@ -44,6 +44,8 @@ public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, G
             PasswordSalt = salt
         };
 
+        await _authRepository.AddAsync(userAuthEntity);
+
         return userProfileEntity.UserId;
     }
 }
