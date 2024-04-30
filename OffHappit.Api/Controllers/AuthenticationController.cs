@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using OffHappit.Application.Features.Authentication.Commands.Registeration;
 
 namespace OffHappit.Api.Controllers
 {
@@ -6,13 +8,20 @@ namespace OffHappit.Api.Controllers
     [Route("Auth")]
     public class AuthenticationController : Controller
     {
-        public ActionResult<string> Login()
+        private readonly IMediator _mediator;
+        public AuthenticationController(IMediator mediator)
         {
-            return "Hello World";
+            _mediator = mediator;
         }
-        public ActionResult<string> Register()
+        //public ActionResult<string> Login()
+        //{
+        //    return "Hello World";
+        //}
+        [HttpPost("register")]
+        public ActionResult<Guid> Register(RegisterUserRequest request)
         {
-            return "Hello World";
+            var userId = _mediator.Send(request);
+            return Ok(userId);
         }
     }
 }

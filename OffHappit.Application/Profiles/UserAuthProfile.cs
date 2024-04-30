@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using OffHappit.Application.Features.Authentication.Commands;
+using OffHappit.Application.Features.Authentication.Commands.Registeration;
 using OffHappit.Domain.Entities;
 using System;
 using System.Collections.Generic;

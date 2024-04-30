@@ -9,8 +9,8 @@ namespace OffHappit.Domain.Entities;
 public class UserProfile
 {
     public Guid UserId { get; set; }
-    public string FirstName { get; set; } = default!;
-    public string LastName { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public string City { get; set; } = default!;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string? Email { get; set; }
+    public string? City { get; set; }
 }

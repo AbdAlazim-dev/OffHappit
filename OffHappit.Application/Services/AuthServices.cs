@@ -27,7 +27,7 @@ public class AuthServices : IAuthServices
 
     public byte[] HashPassword(string password, byte[] salt)
     {
-        string? secretKey = _configuration["AppSettings:SecretKey"]; 
+        string? secretKey = _configuration["AppSettings:SecretKey"];
 
         using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
         {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OffHappit.Application.Features.Authentication.Commands;
+namespace OffHappit.Application.Features.Authentication.Commands.Registeration;
 
 public class RegisterUserRequest : IRequest<Guid>
 {

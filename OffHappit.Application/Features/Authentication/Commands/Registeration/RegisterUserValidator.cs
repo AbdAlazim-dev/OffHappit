@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OffHappit.Application.Features.Authentication.Commands
+namespace OffHappit.Application.Features.Authentication.Commands.Registeration
 {
     public class RegisterUserValidator : AbstractValidator<RegisterUserRequest>
     {
@@ -41,14 +41,15 @@ namespace OffHappit.Application.Features.Authentication.Commands
             RuleFor(p => p.PasswordConfirm)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
-                .Equal(p => p.Password).WithMessage("The two password you entered dose not must.");
-            RuleFor(p => p.Email)
-                .MustAsync(BeUniqueEmail).WithMessage("{PropertyName} is already in use.");
-                
+                .Equal(p => p.Password).WithMessage("The two passwords you entered do not match.");
+
+            //RuleFor(p => p.Email)
+            //    .MustAsync(BeUniqueEmail).WithMessage("{PropertyName} is already in use.");
         }
-        private async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
-        {
-            return (!await _authRepository.UserExists(email));
-        }
+
+        //private async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
+        //{
+        //    return !(await _authRepository.UserExists(email));
+        //}
     }
 }

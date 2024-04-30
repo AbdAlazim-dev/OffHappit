@@ -11,7 +11,7 @@ namespace OffHappit.Application;
 
 public static class AddApplicationServices
 {
-    public static void ConfigureApplicationServices(this IServiceCollection services)
+    public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services)
     {
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -19,6 +19,7 @@ public static class AddApplicationServices
         {
             cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
         });
-        services.AddScoped<IAuthServices, AuthServices>();
+
+        return services;
     }
 }

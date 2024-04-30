@@ -11,16 +11,16 @@ namespace OffHappit.Persistence.Repositories
 {
     public class BassRepository<T> : IAsyncRepository<T> where T : class
     {
-        private readonly OffHappitsDbContext _dbContext;
+        protected readonly OffHappitsDbContext _dbContext;
         public BassRepository(OffHappitsDbContext dbContext)
         {
             _dbContext = dbContext;
         }
         public async Task<T> AddAsync(T entity)
         {
-            var createdEntity = await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.Set<T>().AddAsync(entity);
             await _dbContext.SaveChangesAsync();
-            return createdEntity.Entity;
+            return entity;
         }
 
         public async Task DeleteAsync(T entity)

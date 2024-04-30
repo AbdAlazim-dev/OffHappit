@@ -12,5 +12,4 @@ public class UserCredentials
     public string Email { get; set; } = string.Empty;
     public byte[] PasswordSalt { get; set; } = default!;
     public byte[] HashedPassword { get; set; } = default!;
-
 }

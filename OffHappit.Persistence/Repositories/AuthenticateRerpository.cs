@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OffHappit.Application.Contracts;
+using OffHappit.Application.Services;
 using OffHappit.Domain.Entities;
 using OffHappit.Persistence.DbContexts;
 using System;
@@ -12,19 +13,29 @@ namespace OffHappit.Persistence.Repositories
 {
     public class AuthenticateRerpository : BassRepository<UserCredentials>, IAuthenticateRepository
     {
-        
-        public AuthenticateRerpository(OffHappitsDbContext dbContext) : base(dbContext)
+        private readonly IAuthServices _authServices;
+
+
+        public AuthenticateRerpository(OffHappitsDbContext dbContext,
+            IAuthServices authServices) : base(dbContext)
         {
+            _authServices = authServices;
         }
 
-        public Task<bool> UserExists(string email)
+        public async Task<bool> UserExists(string email)
         {
-            throw new NotImplementedException();
+            return await _dbContext.UsersCredentials.AnyAsync(u => u.Email == email);
         }
 
-        public Task<bool> ValidateUser(string email, string password)
+        public async Task<bool> ValidateUser(string email, string password)
         {
-            throw new NotImplementedException();
+            //get the password salt from the database
+            var user = await _dbContext.UsersCredentials.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+                return false;
+            //hash the password with the salt
+            var hashedPassword = _authServices.HashPassword(password, user.PasswordSalt);
+            return await _dbContext.UsersCredentials.AnyAsync(u => u.Email == email && u.HashedPassword == hashedPassword);
         }
     }
 
