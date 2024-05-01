@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Configuration;
 using OffHappit.Application;
 using OffHappit.Persistence;
+using static OffHappit.Application.Services.AuthServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,14 +12,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services
-    .AddPersistenceServices(builder.Configuration)
-    .ConfigureApplicationServices();
-    
-    
-builder.Services.
-    AddPersistenceServices(builder.Configuration);
+builder.Services.Configure<AuthServicesOptions>(builder.Configuration.GetSection("AuthServicesOptions"));
 
+builder.Services
+    .ConfigureApplicationServices(builder.Configuration)
+    .AddPersistenceServices(builder.Configuration);
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

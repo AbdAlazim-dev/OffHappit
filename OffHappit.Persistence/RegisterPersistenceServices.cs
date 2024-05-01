@@ -23,7 +23,7 @@ public static class RegisterPersistenceServices
         });
 
         services.AddScoped(typeof(IAsyncRepository<>), typeof(BassRepository<>));
-        services.AddScoped<IAuthenticateRepository, AuthenticateRerpository>();
+        services.AddScoped<IAuthenticateRepository, AuthenticateRepository>();
         services.AddScoped<IAuthServices, AuthServices>();
 
         return services;

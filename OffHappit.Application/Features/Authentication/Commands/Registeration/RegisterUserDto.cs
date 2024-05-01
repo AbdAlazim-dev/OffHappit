@@ -1,5 +1,4 @@
-﻿using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OffHappit.Application.Features.Authentication.Commands.Registeration;
 
-public class RegisterUserRequest : IRequest<RegisterUserResponse>
+public class RegisterUserDto
 {
     public string? Email { get; set; }
     public string? FirstName { get; set; }
@@ -16,4 +15,3 @@ public class RegisterUserRequest : IRequest<RegisterUserResponse>
     public string? Password { get; set; }
     public string? PasswordConfirm { get; set; }
 }
-

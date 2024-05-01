@@ -20,8 +20,8 @@ namespace OffHappit.Api.Controllers
         [HttpPost("register")]
         public ActionResult<Guid> Register(RegisterUserRequest request)
         {
-            var userId = _mediator.Send(request);
-            return Ok(userId);
+            var user = _mediator.Send(request);
+            return Ok(user);
         }
     }
 }

@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace OffHappit.Persistence.Repositories
 {
-    public class AuthenticateRerpository : BassRepository<UserCredentials>, IAuthenticateRepository
+    public class AuthenticateRepository : BassRepository<UserCredentials>, IAuthenticateRepository
     {
         private readonly IAuthServices _authServices;
 
 
-        public AuthenticateRerpository(OffHappitsDbContext dbContext,
+        public AuthenticateRepository(OffHappitsDbContext dbContext,
             IAuthServices authServices) : base(dbContext)
         {
             _authServices = authServices;

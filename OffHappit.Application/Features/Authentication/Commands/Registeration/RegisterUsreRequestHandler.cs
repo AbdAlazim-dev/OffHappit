@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OffHappit.Application.Features.Authentication.Commands.Registeration;
 
-public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, Guid>
+public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, RegisterUserResponse>
 {
     private readonly IAsyncRepository<UserCredentials> _authRepository;
     private readonly IAsyncRepository<UserProfile> _profileRepository;
@@ -26,34 +26,47 @@ public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, G
         _authServices = authServices;
         _mapper = mapper;
     }
-    public async Task<Guid> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
+    public async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
+        var newRegisterUserResponse = new RegisterUserResponse();
         //Validate all the user inputs
         var RegisterUserValidation = new RegisterUserValidator();
         var validationResult = await RegisterUserValidation.ValidateAsync(request);
 
         //If the validation fails, throw an exception and include the errors messages
         if (validationResult.Errors.Count > 0)
-            throw new ValidationException(validationResult);
-
-        //Create a user Profile Entity
-        var userProfile = _mapper.Map<UserProfile>(request);
-
-        //Add the user profile to the database to get the user Id
-        var userProfileEntity = await _profileRepository.AddAsync(userProfile);
-
-        var salt = _authServices.CreateSalt();
-
-        var userAuthEntity = new UserCredentials
         {
-            UserId = userProfileEntity.UserId,
-            Email = request.Email,
-            PasswordSalt = salt,
-            HashedPassword = _authServices.HashPassword(request.Password, salt)
-        };
+            newRegisterUserResponse.Success = false;
+            newRegisterUserResponse.ValidationErrors = new List<string>();
 
-        await _authRepository.AddAsync(userAuthEntity);
+            foreach (var error in validationResult.Errors)
+            {
+                newRegisterUserResponse.ValidationErrors.Add(error.ErrorMessage);
+            }
+            //throw new ValidationException(validationResult);
+        }
+        if(newRegisterUserResponse.Success)
+        {
+            //Create a user Profile Entity
+            var userProfile = _mapper.Map<UserProfile>(request);
 
-        return userProfileEntity.UserId;
+            //Add the user profile to the database to get the user Id
+            var userProfileEntity = await _profileRepository.AddAsync(userProfile);
+
+            var salt = _authServices.CreateSalt();
+
+            var userAuthEntity = new UserCredentials
+            {
+                UserId = userProfileEntity.UserId,
+                Email = request.Email,
+                PasswordSalt = salt,
+                HashedPassword = _authServices.HashPassword(request.Password, salt)
+            };
+
+            await _authRepository.AddAsync(userAuthEntity);
+        }
+
+
+        return newRegisterUserResponse;
     }
 }

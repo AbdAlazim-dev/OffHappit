@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace OffHappit.Application.Services;
 
 public class AuthServices : IAuthServices
 {
-    private readonly IConfiguration _configuration;
-    public AuthServices(IConfiguration configuration)
+    private readonly AuthServicesOptions _authOptions;
+    public AuthServices(IOptions<AuthServicesOptions> options)
     {
-        _configuration = configuration;
+        _authOptions = options.Value;
     }
     public byte[] CreateSalt()
     {
@@ -27,7 +28,7 @@ public class AuthServices : IAuthServices
 
     public byte[] HashPassword(string password, byte[] salt)
     {
-        string? secretKey = _configuration["AppSettings:SecretKey"];
+        string? secretKey = _authOptions.SecretKey;
 
         using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
         {
@@ -39,5 +40,9 @@ public class AuthServices : IAuthServices
             byte[] hashedPassword = hmac.ComputeHash(combinedBytes);
             return hashedPassword;
         }
+    }
+    public class AuthServicesOptions
+    {
+        public string SecretKey { get; set; } = string.Empty;
     }
 }
