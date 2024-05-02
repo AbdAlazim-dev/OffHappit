@@ -64,6 +64,7 @@ public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, R
             };
 
             await _authRepository.AddAsync(userAuthEntity);
+            newRegisterUserResponse.User = _mapper.Map<RegisterUserDto>(userProfileEntity);
         }
 
 

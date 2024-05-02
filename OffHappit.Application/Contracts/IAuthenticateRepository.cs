@@ -11,4 +11,5 @@ public interface IAuthenticateRepository : IAsyncRepository<UserCredentials>
 {
     Task<bool> ValidateUser(string email, string password);
     Task<bool> UserExists(string email);
+    Task<Guid> GetUserId(string email);
 }

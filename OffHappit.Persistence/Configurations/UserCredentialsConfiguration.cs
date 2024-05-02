@@ -13,6 +13,13 @@ public class UserCredentialsConfiguration : IEntityTypeConfiguration<UserCredent
 {
     public void Configure(EntityTypeBuilder<UserCredentials> builder)
     {
+        builder.Property(u => u.PasswordSalt)
+            .IsRequired()
+            .HasColumnType("BLOB");
+        builder.Property(u => u.HashedPassword)
+            .IsRequired()
+            .HasColumnType("BLOB");
+
         builder.HasKey(u => u.UserId);
     }
 }
