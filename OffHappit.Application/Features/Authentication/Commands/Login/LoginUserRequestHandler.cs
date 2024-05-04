@@ -13,14 +13,16 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUs
 {
     private readonly IAuthenticateRepository _authRpository;
     private readonly IAsyncRepository<UserProfile> _profileRepository;
-    public LoginUserRequestHandler(IAuthenticateRepository authRpository)
+    public LoginUserRequestHandler(IAuthenticateRepository authRpository,
+        IAsyncRepository<UserProfile> _userProfile)
     {
         _authRpository = authRpository;
+        _profileRepository = _userProfile;
     }
     public async Task<LoginUserResponse> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         var LoginUserResponse = new LoginUserResponse();
-        var userRequestValidator = new LoginUserRequestValidator();
+        var userRequestValidator = new LoginUserRequestValidator(_authRpository);
         var validationResult = await userRequestValidator.ValidateAsync(request);
         if (validationResult.Errors.Count > 0)
         {
@@ -39,6 +41,7 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUs
 
             LoginUserResponse.User = new UserDto
             {
+                UserId = user.UserId,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,

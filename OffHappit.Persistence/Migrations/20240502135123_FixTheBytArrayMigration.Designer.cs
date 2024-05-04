@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OffHappit.Persistence.DbContexts;
 
@@ -10,9 +11,11 @@ using OffHappit.Persistence.DbContexts;
 namespace OffHappit.Persistence.Migrations
 {
     [DbContext(typeof(OffHappitsDbContext))]
-    partial class OffHappitsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240502135123_FixTheBytArrayMigration")]
+    partial class FixTheBytArrayMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");

@@ -11,8 +11,9 @@ namespace OffHappit.Application.Features.Authentication.Commands.Login;
 public class LoginUserRequestValidator : AbstractValidator<LoginUserRequest>
 {
     private readonly IAuthenticateRepository _authRepository;
-    public LoginUserRequestValidator()
+    public LoginUserRequestValidator(IAuthenticateRepository authenticateRepository)
     {
+        _authRepository = authenticateRepository;
         RuleFor(p => p.Email)
             .NotEmpty().WithMessage("{PropertyName} is required.")
             .NotNull()
@@ -25,8 +26,9 @@ public class LoginUserRequestValidator : AbstractValidator<LoginUserRequest>
         RuleFor(p => p)
             .MustAsync(BeValidUser).WithMessage("Invalid email or password.");
     }
-    private async Task<bool> BeValidUser(LoginUserRequest request, CancellationToken cancellationToken)
+    public async Task<bool> BeValidUser(LoginUserRequest request, CancellationToken cancellationToken)
     {
         return !(await _authRepository.ValidateUser(request.Email, request.Password));
     }
+
 }

@@ -16,21 +16,27 @@ public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, R
 {
     private readonly IAsyncRepository<UserCredentials> _authRepository;
     private readonly IAsyncRepository<UserProfile> _profileRepository;
+    private readonly IAuthenticateRepository _authenticateRepository;
     private readonly IAuthServices _authServices;
     private readonly IMapper _mapper;
 
-    public RegisterUsreRequestHandler(IAsyncRepository<UserCredentials> authRepository, IAsyncRepository<UserProfile> profileRepository, IAuthServices authServices, IMapper mapper)
+    public RegisterUsreRequestHandler(IAsyncRepository<UserCredentials> authRepository,
+        IAsyncRepository<UserProfile> profileRepository,
+        IAuthServices authServices,
+        IMapper mapper,
+        IAuthenticateRepository authenticateRepository)
     {
         _authRepository = authRepository;
         _profileRepository = profileRepository;
         _authServices = authServices;
         _mapper = mapper;
+        _authenticateRepository = authenticateRepository;
     }
     public async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
         var newRegisterUserResponse = new RegisterUserResponse();
         //Validate all the user inputs
-        var RegisterUserValidation = new RegisterUserValidator();
+        var RegisterUserValidation = new RegisterUserValidator(_authenticateRepository);
         var validationResult = await RegisterUserValidation.ValidateAsync(request);
 
         //If the validation fails, throw an exception and include the errors messages

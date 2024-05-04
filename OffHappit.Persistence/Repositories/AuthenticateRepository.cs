@@ -36,11 +36,17 @@ public class AuthenticateRepository : BassRepository<UserCredentials>, IAuthenti
     public async Task<bool> ValidateUser(string email, string password)
     {
         //get the password salt from the database
-        var user = await _dbContext.UsersCredentials.FirstOrDefaultAsync(u => u.Email == email);
+        var user = 
+            await _dbContext.UsersCredentials.FirstOrDefaultAsync(u => u.Email == email);
         if (user == null)
-            return false;
+            return true;
         //hash the password with the salt
         var hashedPassword = _authServices.HashPassword(password, user.PasswordSalt);
-        return await _dbContext.UsersCredentials.AnyAsync(u => u.Email == email && u.HashedPassword == hashedPassword);
+        if(await _dbContext.UsersCredentials.AnyAsync
+            (u => u.Email == email && u.HashedPassword == hashedPassword) )
+        {
+            return false;
+        }
+        return false;
     }
 }

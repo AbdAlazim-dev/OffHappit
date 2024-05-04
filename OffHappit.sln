@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffHappit.Domain", "OffHappit.Domain\OffHappit.Domain.csproj", "{8869D921-BE0C-4D56-94D6-9E57A73058F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OffHappit.Domain", "OffHappit.Domain\OffHappit.Domain.csproj", "{8869D921-BE0C-4D56-94D6-9E57A73058F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffHappit.Infrastruture", "OffHappit.Infrastruture\OffHappit.Infrastruture.csproj", "{B50FD9D9-162B-43FA-A387-B083B3D04C37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OffHappit.Infrastruture", "OffHappit.Infrastruture\OffHappit.Infrastruture.csproj", "{B50FD9D9-162B-43FA-A387-B083B3D04C37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffHappit.Application", "OffHappit.Application\OffHappit.Application.csproj", "{0AD3B936-33F3-4364-9A11-553BC447BA97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OffHappit.Application", "OffHappit.Application\OffHappit.Application.csproj", "{0AD3B936-33F3-4364-9A11-553BC447BA97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffHappit.Api", "OffHappit.Api\OffHappit.Api.csproj", "{05DA5322-B9E8-4D3D-8E33-4F025885592A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OffHappit.Api", "OffHappit.Api\OffHappit.Api.csproj", "{05DA5322-B9E8-4D3D-8E33-4F025885592A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{AFD9D2B8-524F-4BD4-8EC0-93FAC93A5CAA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4389A308-EA50-47CF-AC4C-38016E776CE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OffHappit.Persistence", "OffHappit.Persistence\OffHappit.Persistence.csproj", "{41B2F1D6-E326-4724-8A4C-F6173CBD7F86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OffHappit.Persistence", "OffHappit.Persistence\OffHappit.Persistence.csproj", "{41B2F1D6-E326-4724-8A4C-F6173CBD7F86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{37EF4A2E-78F3-4702-A8E2-FDB97107A04D}"
 EndProject

@@ -13,8 +13,10 @@ namespace OffHappit.Application.Features.Authentication.Commands.Registeration
     public class RegisterUserValidator : AbstractValidator<RegisterUserRequest>
     {
         private readonly IAuthenticateRepository _authRepository;
-        public RegisterUserValidator()
+
+        public RegisterUserValidator(IAuthenticateRepository authRepository)
         {
+            _authRepository = authRepository;
 
             RuleFor(p => p.Email)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
@@ -43,13 +45,13 @@ namespace OffHappit.Application.Features.Authentication.Commands.Registeration
                 .NotNull()
                 .Equal(p => p.Password).WithMessage("The two passwords you entered do not match.");
 
-            //RuleFor(p => p.Email)
-            //    .MustAsync(BeUniqueEmail).WithMessage("{PropertyName} is already in use.");
+            RuleFor(p => p.Email)
+                .MustAsync(BeUniqueEmail).WithMessage("{PropertyName} is already in use.");
         }
 
-        //private async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
-        //{
-        //    return !(await _authRepository.UserExists(email));
-        //}
+        public async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
+        {
+            return !(await _authRepository.UserExists(email));
+        }
     }
 }
