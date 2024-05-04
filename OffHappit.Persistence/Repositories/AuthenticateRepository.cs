@@ -38,14 +38,17 @@ public class AuthenticateRepository : BassRepository<UserCredentials>, IAuthenti
         //get the password salt from the database
         var user = 
             await _dbContext.UsersCredentials.FirstOrDefaultAsync(u => u.Email == email);
+
+        //check if user with this email exists
         if (user == null)
-            return true;
-        //hash the password with the salt
+            return false;
+
+        //hash the password with the salt and chech if it matches the hashed password in the database
         var hashedPassword = _authServices.HashPassword(password, user.PasswordSalt);
         if(await _dbContext.UsersCredentials.AnyAsync
             (u => u.Email == email && u.HashedPassword == hashedPassword) )
         {
-            return false;
+            return true;
         }
         return false;
     }

@@ -28,7 +28,7 @@ public class LoginUserRequestValidator : AbstractValidator<LoginUserRequest>
     }
     public async Task<bool> BeValidUser(LoginUserRequest request, CancellationToken cancellationToken)
     {
-        return !(await _authRepository.ValidateUser(request.Email, request.Password));
+        return await _authRepository.ValidateUser(request.Email, request.Password);
     }
 
 }

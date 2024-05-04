@@ -1,11 +1,13 @@
 ﻿using MediatR;
 using OffHappit.Application.Contracts;
 using OffHappit.Domain.Entities;
+using OffHappit.Application.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OffHappit.Exceptions;
 
 namespace OffHappit.Application.Features.Authentication.Commands.Login;
 
@@ -24,6 +26,7 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUs
         var LoginUserResponse = new LoginUserResponse();
         var userRequestValidator = new LoginUserRequestValidator(_authRpository);
         var validationResult = await userRequestValidator.ValidateAsync(request);
+
         if (validationResult.Errors.Count > 0)
         {
             LoginUserResponse.Success = false;
@@ -32,6 +35,7 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUs
             {
                 LoginUserResponse.ValidationErrors.Add(error.ErrorMessage);
             }
+            //throw new ValidationException(validationResult);
         }
         if (LoginUserResponse.Success)
         {
