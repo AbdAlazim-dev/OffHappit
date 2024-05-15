@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using OffHappit.Application.Contracts;
+using OffHappit.Application.Features.Authentication.Dtos;
 using OffHappit.Application.Services;
 using OffHappit.Domain.Entities;
 using OffHappit.Exceptions;
@@ -49,7 +50,7 @@ public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, R
             {
                 newRegisterUserResponse.ValidationErrors.Add(error.ErrorMessage);
             }
-            //throw new ValidationException(validationResult);
+            throw new ValidationException(validationResult);
         }
         if(newRegisterUserResponse.Success)
         {
@@ -57,20 +58,30 @@ public class RegisterUsreRequestHandler : IRequestHandler<RegisterUserRequest, R
             var userProfile = _mapper.Map<UserProfile>(request);
 
             //Add the user profile to the database to get the user Id
-            var userProfileEntity = await _profileRepository.AddAsync(userProfile);
+
 
             var salt = _authServices.CreateSalt();
-
             var userAuthEntity = new UserCredentials
             {
-                UserId = userProfileEntity.UserId,
+                UserId = Guid.NewGuid(),
                 Email = request.Email,
                 PasswordSalt = salt,
                 HashedPassword = _authServices.HashPassword(request.Password, salt)
             };
 
+            newRegisterUserResponse.User = new UserDto
+            {
+                UserId = userAuthEntity.UserId,
+                Email = userAuthEntity.Email,
+                FirstName = userProfile.FirstName,
+                LastName = userProfile.LastName,
+                City = userProfile.City
+            };
+            userProfile.UserId = userAuthEntity.UserId;
+
+
+            await _profileRepository.AddAsync(userProfile);
             await _authRepository.AddAsync(userAuthEntity);
-            newRegisterUserResponse.User = _mapper.Map<RegisterUserDto>(userProfileEntity);
         }
 
 

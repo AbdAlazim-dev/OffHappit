@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OffHappit.Exceptions;
+using OffHappit.Application.Features.Authentication.Dtos;
 
 namespace OffHappit.Application.Features.Authentication.Commands.Login;
 
@@ -35,7 +36,7 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, LoginUs
             {
                 LoginUserResponse.ValidationErrors.Add(error.ErrorMessage);
             }
-            //throw new ValidationException(validationResult);
+            throw new ValidationException(validationResult);
         }
         if (LoginUserResponse.Success)
         {

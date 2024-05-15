@@ -1,4 +1,6 @@
-﻿using OffHappit.Application.Responses;
+﻿using OffHappit.Application.Features.Authentication.Commands.Login;
+using OffHappit.Application.Features.Authentication.Dtos;
+using OffHappit.Application.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,5 @@ public class RegisterUserResponse : BaseResponse
     {
     }
 
-    public RegisterUserDto User { get; set; }
+    public UserDto User { get; set; }
 }

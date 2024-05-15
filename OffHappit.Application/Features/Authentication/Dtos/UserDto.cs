@@ -1,4 +1,4 @@
-﻿namespace OffHappit.Application.Features.Authentication.Commands.Login;
+﻿namespace OffHappit.Application.Features.Authentication.Dtos;
 
 public class UserDto
 {

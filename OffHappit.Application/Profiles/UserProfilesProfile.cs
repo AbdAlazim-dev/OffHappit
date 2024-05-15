@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OffHappit.Application.Features.Authentication.Commands.Registeration;
+using OffHappit.Application.Features.Authentication.Dtos;
 using OffHappit.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,6 @@ public class UserProfilesProfile : Profile
     public UserProfilesProfile()
     {
         CreateMap<UserProfile, RegisterUserRequest>().ReverseMap();
-        CreateMap<UserProfile, RegisterUserDto>().ReverseMap();
+        //CreateMap<UserProfile, UserDto>().ReverseMap();
     }
 }
